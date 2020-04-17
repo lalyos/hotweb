@@ -1,6 +1,7 @@
 package hotweb
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -13,6 +14,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/progrium/hotweb/pkg/jsexports"
 	"github.com/radovskyb/watcher"
+	"golang.org/x/net/webdav"
 )
 
 const (
@@ -66,6 +68,19 @@ func New(fileroot string, next http.Handler) *Middleware {
 	}
 }
 
+var wd = &webdav.Handler{
+	Prefix:     "/webdav/",
+	FileSystem: webdav.Dir("."),
+	LockSystem: webdav.NewMemLS(),
+	Logger: func(r *http.Request, err error) {
+		if err != nil {
+			log.Printf("WEBDAV [%s]: %s, ERROR: %s\n", r.Method, r.URL, err)
+		} else {
+			log.Printf("WEBDAV [%s]: %s \n", r.Method, r.URL)
+		}
+	},
+}
+
 func (m *Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if websocket.IsWebSocketUpgrade(r) {
 		conn, err := m.Upgrader.Upgrade(w, r, nil)
@@ -79,6 +94,22 @@ func (m *Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	if path.Base(r.URL.Path) == ClientModuleName {
 		m.handleClientModule(w, r)
+		return
+	}
+
+	if r.URL.Path == "/webdav.code-workspace" {
+		//http.ServeFile(w, r, "webdav-worksp/2222.code-workspace")
+		fmt.Fprintf(w, `{
+			"folders": [{
+					"uri": "webdav://%s/?base=webdav/",
+					"name": "Hotweb - webdav",
+			}`, r.Host)
+		return
+	}
+
+	if strings.HasPrefix(r.URL.Path, "/webdav/") {
+		log.Println("[webdav] ...")
+		wd.ServeHTTP(w, r)
 		return
 	}
 
