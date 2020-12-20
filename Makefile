@@ -17,6 +17,6 @@ dist:
 	GOOS=windows go build -o build/$(NAME)-windows.exe ./cmd/hotweb
 
 update-ver-ref:
-	sed -i "s/v[0-9]\.[0-9]\.[0-9]\+/v$(LATEST)/" README.md
+	sed -i "s/v[0-9]\.[0-9]\.[0-9]\+/$(LATEST)/" README.md
 
 .PHONY: build

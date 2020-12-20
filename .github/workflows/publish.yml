@@ -16,9 +16,6 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
 
-    - id: get_version
-      uses: battila7/get-version-action@v2
-
     - name: Build binary
       run: make dist
 

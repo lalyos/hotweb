@@ -16,10 +16,15 @@ jobs:
       with:
         ref: master
 
+    - id: latest
+      uses: pozetroninc/github-action-get-latest-release@master
+      with:
+        repository: ${{ github.repository }}
+
     - name: Update master branch with new version ref
       run: |
        git config --global user.email "action@github.com"
        git config --global user.name "Github Action"
-       make update-ver-ref LATEST=${GITHUB_REF}
-       git commit -am "Update references with ${GITHUB_REF}"
+       make update-ver-ref LATEST=${{ steps.latest.outputs.release }}
+       git commit -am "Update references with ${{ steps.latest.outputs.release }}"
        git push origin master
