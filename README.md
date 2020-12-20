@@ -1,11 +1,11 @@
 # hotweb
 Live reloading and ES6 hot module replacement for plain old JavaScript
 
-Although a number of tools exist for live development, this tool was 
-created for per module reloading, specifically ES6 modules. 
+Although a number of tools exist for live development, this tool was
+created for per module reloading, specifically ES6 modules.
 It also reloads CSS and full pages on HTML changes if desired.
 
-When used with plain old JavaScript component frameworks like 
+When used with plain old JavaScript component frameworks like
 [Mithril](https://mithril.js.org/), you can finally have modern, component-based frontend
 development **without a compile step, without Node.js or any node_modules,
 and without Webpack.**
@@ -13,6 +13,14 @@ and without Webpack.**
 **NEW** Supports on-the-fly conversion of JSX, see `_example`
 
 ## Getting hotweb
+
+Linux / Mac
+```
+curl -Lo /usr/local/bin/hotweb https://github.com/lalyos/hotweb/releases/download/v0.0.1/hotweb-$(uname)
+chmod +x /usr/local/bin/hotweb
+```
+
+Or if you have go installed:
 ```
 $ go get -U github.com/progrium/hotweb/cmd/hotweb
 ```
@@ -64,7 +72,7 @@ which you can use directly in Go to customize or integrate hotweb with your tool
 ## Notes
 
 ### Stateful JS modules
-You may experience weird bugs if you try to hot replace stateful modules. You can 
+You may experience weird bugs if you try to hot replace stateful modules. You can
 mark a module to reload the whole page instead of trying to hot replace by exporting
 a field named `noHMR`. The type and value are ignored. Example:
 ```javascript
