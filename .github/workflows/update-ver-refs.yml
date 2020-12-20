@@ -1,0 +1,23 @@
+name: publish
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  update-version-refs:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout master
+      uses: actions/checkout@v2
+      with:
+        ref: master
+
+    - name: Update master branch with new version ref
+      run: |
+       git config --global user.email "action@github.com"
+       git config --global user.name "Github Action"
+       make update-ver-ref LATEST=${{GITHUB_REF}}
+       git commit -am "Update references with ${{GITHUB_REF}}"
+       git push origin master
