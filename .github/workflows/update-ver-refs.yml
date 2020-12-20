@@ -2,7 +2,9 @@ name: update-version-refs
 
 on:
   release:
-    types: [created]
+    types:
+    - created
+    - released
 
 jobs:
   update-version-refs:
