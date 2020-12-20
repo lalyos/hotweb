@@ -1,0 +1,23 @@
+name: Build
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    name: Go build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v1
+
+    - name: Build binary
+      run: go build ./cmd/hotweb
