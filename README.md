@@ -16,7 +16,7 @@ and without Webpack.**
 
 Linux / Mac
 ```
-curl -Lo /usr/local/bin/hotweb https://github.com/lalyos/hotweb/releases/download/v0.0.3/hotweb-$(uname)
+curl -Lo /usr/local/bin/hotweb https://github.com/lalyos/hotweb/releases/download/v0.0.4/hotweb-$(uname)
 chmod +x /usr/local/bin/hotweb
 ```
 
